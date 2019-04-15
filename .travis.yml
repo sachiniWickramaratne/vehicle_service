@@ -6,4 +6,4 @@ services:
   - redis-server
   
 before_install:
-  - mysql -e 'CREATE DATABASE alten;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'

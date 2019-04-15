@@ -27,7 +27,6 @@ import com.alten.dto.CustomerVehiclesDTO;
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @TestPropertySource("classpath:application-test.properties")
-
 public class VehicleApiTest {
 
 	@Autowired
