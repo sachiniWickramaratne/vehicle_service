@@ -7,3 +7,17 @@ services:
   
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
+
+image: vehicle-service/aws-cli-docker
+
+variables:
+   AWS_ACCESS_KEY_ID: "AKIAW7IAYLKHXGTTJLIE"
+   AWS_SECRET_ACCESS_KEY: "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"
+
+deploy_stage:
+  stage: deploy
+  environment: Production
+  only:
+    - master
+  script:
+    - aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker-compose -f /home/ec2-user/docker-compose.yml up -d --no-deps --build"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
