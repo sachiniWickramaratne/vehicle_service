@@ -9,7 +9,7 @@ services:
  
 before_install:
   - mvn clean package -DskipTests
-  - ls
+  - ls -l
   - sudo apt update -y
   - sudo apt install --only-upgrade docker-ce -y
   - docker version
