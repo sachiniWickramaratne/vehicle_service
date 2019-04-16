@@ -12,10 +12,15 @@ after_success:
   - docker login -u sachiniwick -p dach2010008
   - docker build -t sachiniwick/vehicle_service .
   - docker push sachiniwick/vehicle_service
-  
+
+before_deploy:
+  - pip install --user awscli
+  - export AWS_ACCESS_KEY_ID="1.$TRAVIS_BUILD_NUMBER"
+  - export AWS_SECRET_ACCESS_KEY="1.$TRAVIS_BUILD_NUMBER"
+
 deploy:
   - provider: script
-  - sh aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker-compose -f /home/ec2-user/docker-compose.yml up -d --no-deps --build"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
+  - sh aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker -d "],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
 
 variables:
    AWS_ACCESS_KEY_ID: "AKIAW7IAYLKHXGTTJLIE"
