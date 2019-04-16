@@ -1,13 +1,17 @@
 language: java
 jdk: oraclejdk8
 services:
-  - mysql
-  - rabbitmq
-  - redis-server
+ # - mysql
+ # - rabbitmq
+ # - redis-server
+  - docker
   
-before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
+script: mvn clean package -DskipTests
 
+before_install:
+ # - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
+  - docker build -t vehicle_service .
+  
 image: vehicle-service/aws-cli-docker
 
 variables:
