@@ -1,4 +1,5 @@
-FROM java:8 
+FROM frolvlad/alpine-oraclejdk8:slim
+VOLUME /tmp
 #WORKDIR /tmp
 #RUN sh -c 'cd  /tmp && ls'
 ADD target/vehicle-service-0.0.1-SNAPSHOT.jar  /customer-service.jar
