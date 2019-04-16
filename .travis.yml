@@ -8,8 +8,10 @@ services:
   
  
 before_install:
-  - './.travis/main.sh'
   - mvn clean package -DskipTests
+  - ls
+  - sudo apt update -y
+  - sudo apt install --only-upgrade docker-ce -y
   - docker version
  # - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
   - docker build -t vehicle_service .
