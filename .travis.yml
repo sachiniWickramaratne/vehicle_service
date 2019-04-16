@@ -10,15 +10,12 @@ script:
 
 after_success:
   - docker login -u sachiniwick -p dach2010008
-#  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-#  - export IMAGE_NAME=sivaprasadreddy/jblogger
-#  - docker build -t $IMAGE_NAME:$COMMIT .
-#  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
-#  - docker push $IMAGE_NAME
   - docker build -t sachiniwick/vehicle_service .
   - docker push sachiniwick/vehicle_service
   
-#image: vehicle-service/aws-cli-docker
+deploy:
+  - provider: script
+  - sh aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker-compose -f /home/ec2-user/docker-compose.yml up -d --no-deps --build"],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
 
 variables:
    AWS_ACCESS_KEY_ID: "AKIAW7IAYLKHXGTTJLIE"
