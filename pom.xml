@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.alten</groupId>
-	<artifactId>customerService</artifactId>
+	<artifactId>vehicle-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>customerService</name>
-	<description>Customer Service For Alten Vehicles</description>
+	<name>vehicle-service</name>
+	<description>Vehicle Service For Alten Vehicles</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -72,6 +72,50 @@
 
 	<build>
 		<plugins>
+			<plugin>
+	            <groupId>io.fabric8</groupId>
+	            <artifactId>docker-maven-plugin</artifactId>
+	            <configuration>
+	                <images>
+	                    <image>
+							<name>${service.registry}/${project.artifactId}:${service.buildno}</name>
+	                        <build>
+	                            <from>java:8</from>
+								<volumes>
+				     				<volume>/tmp</volume>
+				            	</volumes>
+							    <ports>
+		                      		<port>8081</port>
+		                    	</ports> 
+								<tags>
+									<tag>${service.tag}</tag>
+								</tags>
+								<cmd> 
+            						<shell>java \
+            						-Xms64m -Xmx512m -XX:+UseTLAB -XX:+ResizeTLAB -XX:ReservedCodeCacheSize=64m  -XX:+UseCodeCacheFlushing \
+            						-jar \
+            						-Dserver.contextPath=/${project.artifactId} \
+									/maven/${project.artifactId}-${project.version}.${project.packaging}
+									</shell>
+			 					</cmd>
+		                        <!--<entryPoint>
+		                        	<exec>
+		                                <arg>java</arg>
+										<arg>$JAVA_OPTS</arg>
+		                                <arg>-jar</arg>
+		                                <arg>-Dserver.contextPath=${project.artifactId}</arg>
+		                                <arg>/maven/${project.artifactId}-${project.version}.${project.packaging}</arg>
+		                      		</exec>
+								</entryPoint> -->
+		                        <assembly>
+		                        	<descriptorRef>artifact</descriptorRef>
+								</assembly>
+	                        </build>
+	                    </image>
+	                </images>
+	            </configuration>
+			</plugin>			
+	
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
