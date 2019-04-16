@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM java:openjdk-8-alpine 
 VOLUME /tmp
 #WORKDIR /tmp
 #RUN sh -c 'cd  /tmp && ls'
