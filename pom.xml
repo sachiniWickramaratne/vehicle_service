@@ -78,18 +78,16 @@
 	            <configuration>
 	                <images>
 	                    <image>
-							<name>${service.registry}/${project.artifactId}:${service.buildno}</name>
+							<name>sachiniwick/${project.artifactId}</name>
 	                        <build>
 	                            <from>java:8</from>
 								<volumes>
 				     				<volume>/tmp</volume>
 				            	</volumes>
 							    <ports>
-		                      		<port>8081</port>
+		                      		<port>8080</port>
 		                    	</ports> 
-								<tags>
-									<tag>${service.tag}</tag>
-								</tags>
+								
 								<cmd> 
             						<shell>java \
             						-Xms64m -Xmx512m -XX:+UseTLAB -XX:+ResizeTLAB -XX:ReservedCodeCacheSize=64m  -XX:+UseCodeCacheFlushing \
