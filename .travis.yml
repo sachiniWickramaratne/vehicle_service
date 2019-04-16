@@ -20,8 +20,8 @@ before_deploy:
 
 deploy:
   - provider: script
-  - sh aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker -d "],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
-
+  - bash echo 1
+#aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids "i-0b2449dadb68fdb77" --parameters '{"commands":["sudo docker -d "],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
 variables:
    AWS_ACCESS_KEY_ID: "AKIAW7IAYLKHXGTTJLIE"
    AWS_SECRET_ACCESS_KEY: "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"
