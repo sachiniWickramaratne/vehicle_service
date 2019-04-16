@@ -6,9 +6,11 @@ services:
  # - redis-server
   - docker
   
-script: mvn clean package -DskipTests
-
+ 
 before_install:
+  - './.travis/main.sh'
+  - mvn clean package -DskipTests
+  - docker version
  # - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
   - docker build -t vehicle_service .
   
