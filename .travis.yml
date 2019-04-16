@@ -9,13 +9,14 @@ script:
   - ./mvnw  clean install -DskipTests -B
 
 after_success:
-#  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker login -u sachniwick -p dach2010008
 #  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 #  - export IMAGE_NAME=sivaprasadreddy/jblogger
 #  - docker build -t $IMAGE_NAME:$COMMIT .
 #  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 #  - docker push $IMAGE_NAME
-  - docker build -t vehicle_service .
+  - docker build -t sachniwick/vehicle_service .
+  - docker push sachniwick/vehicle_service
   
 #image: vehicle-service/aws-cli-docker
 
