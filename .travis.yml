@@ -5,8 +5,8 @@ jdk: oraclejdk8
 services:
 - docker
 
-#script:
-#  - ./mvnw  clean install -DskipTests -B
+script:
+  - ./mvnw  clean install -DskipTests -B
 
 after_success:
   - docker login -u sachiniwick -p dach2010008
