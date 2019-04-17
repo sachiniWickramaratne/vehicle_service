@@ -1,25 +1,18 @@
 sudo: required
 language: java
 jdk: oraclejdk8
- 
 services:
 - docker
-
 script:
-  - ./mvnw  clean install -DskipTests -B
-
+- "./mvnw  clean install -DskipTests -B"
 after_success:
-  - docker login -u sachiniwick -p dach2010008
-  - docker build -t sachiniwick/vehicle_service .
-  - docker push sachiniwick/vehicle_service
-  - pip install awscli --upgrade --user 
-  - export AWS_ACCESS_KEY_ID=AKIAJ7MDEYBUCO5I5ZJA && export AWS_SECRET_ACCESS_KEY=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 && aws ssm send-command --document-name AWS-RunShellScript --instance-ids i-0b2449dadb68fdb77 --parameters '{"commands":["sudo docker run -d -p 8081:8081 sachiniwick/vehicle_service "],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
-
-#before_deploy:
-#  - pip install awscli --upgrade --user
-#  - export AWS_ACCESS_KEY_ID="AKIAW7IAYLKHXGTTJLIE"
-#  - export AWS_SECRET_ACCESS_KEY="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"
-
-#deploy:
-#  - provider: script
-#  - script:
+- docker login -u sachiniwick -p dach2010008
+- docker build -t sachiniwick/vehicle_service .
+- docker push sachiniwick/vehicle_service
+- pip install awscli --upgrade --user
+- export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} && aws ssm send-command --document-name AWS-RunShellScript --instance-ids i-0b2449dadb68fdb77
+  --parameters '{"commands":["sudo docker run -d -p 8081:8081 sachiniwick/vehicle_service
+  "],"executionTimeout":["3600"]}' --timeout-seconds 600 --region us-east-2
+env:
+  global:
+    secure: nVpEMdVor8CIoNXpR467ZwSNVX3MPBxGh7HtON49C4h+ctm3YlOz0Tfz69JJltGvexL0HdvX4Zim+Hu6sLAO8EE89bh2jrWkcmFc2aL6ddqlNq0Z1fMKGTg3iOj/1Ugl3lFWFJAcYwiaGVXRCMJKtnvG5jV/B5wusy6kK/qVhgdPSCCzVQxwLEHDFhG9Z4FlOw2ELLQska3lSJLBI5dC8uUiADrZ4zDyYFfOo6DiR6l2h57wVhlaFyucEz+T1wvgeq+Vuk4aZWXB8iC8CNol3D7XvBoBYcluRj10iNLet8xqGjUnkfNkevx9IvXt4ctZHvEaKs3hWEcpaDbAk9b0A/UYwNpyi1xzaFjwMKyQOJsxNcpCwV7v0KOdWXnsDYj6hJXJuVKoGysQLXgk9NGs9caJ45zM1nhB9t6DmHw7cYnVdz9xnI5ehTfBP93sH7RDQCWxZyu48yMA/KNnr+214mjsyC+1L0AqEZZB5sh5vU5lLaLSoD3nt4t6/bjT8dYE9Q1PhoRiSftT7S7DAYkbcO1zAJKichfT0UCzbGF1JGoJdOKDzPYFtbkWNiDwWpHPau4mxxXCR8wGjrEAKQCYb40X8HnbUfQB55CKr7CiH7KBKe0taEiekUDOB5Ldvis+jOJDgrw35lK/agleeGlQtMgYFdR/9EkogTAKeD5Gf3M=
