@@ -6,12 +6,15 @@ services:
 script:
 - "./mvnw  clean install -DskipTests -B"
 
+before_install:
+- pip install requests[security]
+- pip install --upgrade ndg-httpsclient
+
 after_success:
 - docker login -u sachiniwick -p dach2010008
 - docker build -t sachiniwick/vehicle_service .
 - docker push sachiniwick/vehicle_service
-- pip install pyOpenSSL ndg-httpsclient pyasn1
-- pip install --upgrade ndg-httpsclient
+- pip install requests[security]
 - pip install awscli --upgrade --user
 - export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} && export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} && aws ssm send-command --document-name AWS-RunShellScript --instance-ids i-0b2449dadb68fdb77
   --parameters '{"commands":["sudo docker run -d -p 8081:8081 sachiniwick/vehicle_service
