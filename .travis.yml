@@ -5,8 +5,12 @@ services:
 - docker
 script:
 - "./mvnw  clean install -DskipTests -B"
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install python3
+
 after_success:
-- sudo apt-get -y install python3
 - docker login -u sachiniwick -p dach2010008
 - docker build -t sachiniwick/vehicle_service .
 - docker push sachiniwick/vehicle_service
