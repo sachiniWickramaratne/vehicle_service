@@ -4,6 +4,8 @@ jdk: oraclejdk8
 services:
 - docker
 - mysql
+- redis
+- rabbitmq
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS alten;'
